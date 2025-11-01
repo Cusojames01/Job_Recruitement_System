@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Job_Recruitment_System.Models.Recruiter>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "RecruiterList";
+}
+
+
+<div class="container mt-5">
+    <h2 class="text-center text-success fw-bold mb-4">Registered Recruiters</h2>
+
+    <div class="text-end mb-3">
+        <a asp-action=AddRecruiter" asp-controller="Recruiter" class="btn btn-success">
+            ➕ Add New Recruiter
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-success text-center">
+            <tr>
+                <th>ID</th>
+                <th>Role</th>
+                <th>Company Name</th>
+                <th>Recruiter Name</th>
+                <th>Sex</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var recruiter in Model)
+                {
+                    <tr>
+                        <td class="text-center">@recruiter.Id</td>
+                        <td>@recruiter.Role</td>
+                        <td>@recruiter.CompanyName</td>
+                        <td>@recruiter.RecruiterName</td>
+                        <td>@recruiter.Sex</td>
+                        <td>@recruiter.Email</td>
+                        <td>@recruiter.Contact</td>
+                        <td class="text-center">
+                            <a asp-action="EditRecruiter" asp-route-id="@recruiter.Id" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                            <a asp-action="DeleteRecruiter" asp-route-id="@recruiter.Id" class="btn btn-sm btn-danger"
+                        ">🗑️ Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No recruiters found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

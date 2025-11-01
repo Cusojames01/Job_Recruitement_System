@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Job_Recruitment_System.Models.PostJob>
+@{
+    ViewData["Title"] = "Job List";
+}
+
+<div class="container mt-4">
+    <div class="mb-3">
+        <a asp-controller="Recruiter" asp-action="RecruiterDashBoard" class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <h2 class="text-center mt-3">📋 Job List</h2>
+
+    @if (!Model.Any())
+    {
+        <p class="text-center text-muted">No jobs posted yet.</p>
+    }
+    else
+    {
+        <div class="d-flex flex-column gap-3">
+            @foreach (var job in Model)
+            {
+                <div class="card shadow-sm p-3 hover-shadow">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">@job.CompanyName</h5>
+                            <h6 class="text-muted mb-2">@job.JobTitle</h6>
+                            <p class="mb-1"><strong>Type:</strong> @job.JobType</p>
+                            <p class="mb-1"><strong>Salary:</strong> @job.SalaryRange</p>
+                            <p class="mb-1"><strong>Location:</strong> @job.Location</p>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("JobDetails", "PostJob", new { id = job.Id })" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .hover-shadow {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-radius: 10px;
+    }
+
+        .hover-shadow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+</style>

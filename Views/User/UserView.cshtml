@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Job_Recruitment_System.Models.User>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "userlist";
+}
+
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary fw-bold mb-4">Registered Users</h2>
+
+    <div class="text-end mb-3">
+        <a asp-action="AddUser" class="btn btn-success">
+            ➕ Add New User
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-primary text-center">
+            <tr>
+                <th>ID</th>
+
+                <th>Role</th>
+                <th>Full Name</th>
+       
+                <th>Sex</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var user in Model)
+                {
+                    <tr>
+                        <td class="text-center">@user.Id</td>
+                        <td>@user.Role</td>
+                        <td>@user.FullName</td>
+                        <td>@user.Sex</td>
+                        <td>@user.Email</td>
+                        <td>@user.Contact</td>
+                        <td class="text-center">
+                            <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                            <a asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No users found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

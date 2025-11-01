@@ -1,0 +1,112 @@
+﻿@model Job_Recruitment_System.Models.Recruiter
+
+@{
+    ViewData["Title"] = "RecruiterProfile";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow-lg p-4 rounded-4" style="width: 500px;">
+        <h3 class="text-center mb-4 text-primary fw-bold">
+            <i class="bi bi-person-circle me-2"></i> Recruiter Profile
+        </h3>
+
+        <form asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <!-- VIEW MODE -->
+            <div id="viewMode" class="text-center mb-3">
+                <img id="profileImageView" src="~/uploads/recruiters/@(string.IsNullOrEmpty(Model.ProfileImage) ? "default.png" : Model.ProfileImage)"
+                     class="rounded-circle mb-3" style="width:120px; height:120px; object-fit:cover;" alt="Profile Image" />
+
+                <p><strong>Company Name:</strong> @Model.CompanyName</p>
+                <p><strong>Recruiter Name:</strong> @Model.RecruiterName</p>
+                <p><strong>Sex:</strong> @Model.Sex</p>
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Contact:</strong> @Model.Contact</p>
+
+                <div class="text-center mt-4">
+                    <button type="button" id="btnEdit" class="btn btn-primary px-4">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+                    <a asp-action="RecruiterDashBoard" asp-controller="Recruiter" class="btn btn-secondary px-4">
+                        <i class="bi bi-x-circle"></i> Close
+                    </a>
+                </div>
+            </div>
+
+            <!-- EDIT MODE -->
+            <div id="editMode" style="display:none;">
+                <div class="mb-3 text-center">
+                    <img id="previewImage" src="~/uploads/recruiters/@(string.IsNullOrEmpty(Model.ProfileImage) ? "default.png" : Model.ProfileImage)"
+                         class="rounded-circle mb-3" style="width:120px; height:120px; object-fit:cover;" alt="Profile Image" />
+
+                    <input type="file" name="ProfileImage" class="form-control mt-2" accept="image/*" onchange="previewFile(this);" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Company Name</label>
+                    <input type="text" name="CompanyName" class="form-control" value="@Model.CompanyName" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Recruiter Name</label>
+                    <input type="text" name="RecruiterName" class="form-control" value="@Model.RecruiterName" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Sex</label>
+                    <select name="Sex" class="form-select">
+                        <option value="Male" selected="@((Model.Sex == "Male") ? "selected" : null)">Male</option>
+                        <option value="Female" selected="@((Model.Sex == "Female") ? "selected" : null)">Female</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Email</label>
+                    <input type="email" name="Email" class="form-control" value="@Model.Email" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Contact</label>
+                    <input type="text" name="Contact" class="form-control" value="@Model.Contact" required />
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2">
+                        <i class="bi bi-check-circle"></i> Save Changes
+                    </button>
+                    <button type="button" id="btnCancel" class="btn btn-danger px-4 me-2">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </button>
+                  
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const btnEdit = document.getElementById("btnEdit");
+        const btnCancel = document.getElementById("btnCancel");
+        const viewMode = document.getElementById("viewMode");
+        const editMode = document.getElementById("editMode");
+
+        btnEdit.addEventListener("click", () => {
+            viewMode.style.display = "none";
+            editMode.style.display = "block";
+        });
+
+        btnCancel.addEventListener("click", () => {
+            editMode.style.display = "none";
+            viewMode.style.display = "block";
+        });
+
+        function previewFile(input){
+            const file = input.files[0];
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    document.getElementById('previewImage').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+}

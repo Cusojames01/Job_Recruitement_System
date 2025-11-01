@@ -1,0 +1,89 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "AdminDashboard";
+    var users = ViewBag.Users as List<Job_Recruitment_System.Models.User>;
+    var recruiters = ViewBag.Recruiters as List<Job_Recruitment_System.Models.Recruiter>;
+}
+
+<h2 class="text-primary mb-4">Admin Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Total Applicants</h5>
+                <h3>@ViewBag.TotalUsers</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Total Recruiters</h5>
+                <h3>@ViewBag.TotalRecruiters</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Total Combined</h5>
+                <h3>@ViewBag.TotalAll</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Users Table -->
+<h4>Registered Users</h4>
+<table class="table table-bordered table-hover mb-4">
+    <thead class="table-primary">
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Sex</th>
+            <th>Email</th>
+            <th>Contact</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FullName</td>
+                <td>@user.Sex</td>
+                <td>@user.Email</td>
+                <td>@user.Contact</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Recruiters Table -->
+<h4>Registered Recruiters</h4>
+<table class="table table-bordered table-hover">
+    <thead class="table-success">
+        <tr>
+            <th>ID</th>
+            <th>Company Name</th>
+            <th>Recruiter Name</th>
+            <th>Sex</th>
+            <th>Email</th>
+            <th>Contact</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recruiter in recruiters)
+        {
+            <tr>
+                <td>@recruiter.Id</td>
+                <td>@recruiter.CompanyName</td>
+                <td>@recruiter.RecruiterName</td>
+                <td>@recruiter.Sex</td>
+                <td>@recruiter.Email</td>
+                <td>@recruiter.Contact</td>
+            </tr>
+        }
+    </tbody>
+</table>

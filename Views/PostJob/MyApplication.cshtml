@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Job_Recruitment_System.Models.JobApplication>
+
+@{
+    ViewData["Title"] = "MyApplications";
+}
+
+<div class="container mt-4 mb-5 position-relative" style="max-width: 850px;">
+    <!-- 🔙 Back Button -->
+    <div class="position-absolute move-left">
+        <a asp-controller="User" asp-action="UserDashboard"
+           class="btn btn-secondary btn-sm back-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <!-- 🔹 Header -->
+    <h2 class="text-center text-primary fw-bold mb-4">
+        <i class="bi bi-briefcase-fill me-2"></i> My Applications
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center shadow-sm rounded p-3">
+            You haven’t applied to any jobs yet.
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-column gap-3 align-items-center">
+            @foreach (var app in Model)
+            {
+                <div class="card shadow-sm p-4 hover-shadow border-0 rounded-4 w-100" style="max-width: 700px;">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <h5 class="fw-bold mb-1">@app.PostJob?.CompanyName</h5>
+                            <h6 class="text-muted mb-2">@app.PostJob?.JobTitle</h6>
+                            <p class="mb-1"><strong>Type:</strong> @app.PostJob?.JobType</p>
+                            <p class="mb-1"><strong>Location:</strong> @app.PostJob?.Location</p>
+                            <p class="mb-1"><strong>Applied On:</strong> @app.AppliedDate.ToString("MMMM dd, yyyy")</p>
+                        </div>
+
+                        <div class="text-center">
+                            @if (!string.IsNullOrEmpty(app.ResumePath))
+                            {
+                                <a href="~/uploads/resumes/@app.ResumePath"
+                                   target="_blank"
+                                   class="btn btn-outline-primary px-3 mb-2">
+                                    <i class="bi bi-file-earmark-pdf"></i> View Resume
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted d-block mb-2">No Resume</span>
+                            }
+
+                            <a href="@Url.Action("JobDetails", "UserJob", new { id = app.PostJobId })"
+                               class="btn btn-primary px-3">
+                                <i class="bi bi-info-circle"></i> View Job
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    /* 🔙 Back button placement */
+    .move-left {
+        left: -280px;
+        top: 10px;
+    }
+
+    .back-btn {
+        transition: all 0.3s ease;
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px rgba(108, 117, 125, 0.6);
+            background-color: #5c636a;
+            color: white;
+        }
+
+    .hover-shadow {
+        transition: all 0.3s ease;
+        border-radius: 12px;
+        background-color: #ffffff;
+    }
+
+        .hover-shadow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+        }
+
+    .card p {
+        margin-bottom: 4px;
+    }
+</style>

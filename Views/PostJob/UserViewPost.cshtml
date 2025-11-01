@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Job_Recruitment_System.Models.PostJob>
+
+<div class="container mt-4 position-relative">
+    <!-- 🔙 Back Button -->
+    <div class="position-absolute move-left">
+        <a href="@Url.Action("UserDashboard", "User")" class="btn btn-secondary btn-sm back-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <!-- 💼 Job List -->
+    <h2 class="text-center mb-4">Available Jobs</h2>
+
+    <div class="d-flex flex-column gap-3 align-items-center">
+        @foreach (var job in Model)
+        {
+            <div class="card shadow-sm p-3 hover-shadow text-start" style="width: 60%; max-width: 650px;">
+                <h5>@job.CompanyName</h5>
+                <h6 class="text-muted">@job.JobTitle</h6>
+                <p><strong>Type:</strong> @job.JobType | <strong>Location:</strong> @job.Location</p>
+                <div class="text-end">
+                    <a href="@Url.Action("UserJobDetails", "PostJob", new { id = job.Id })" class="btn btn-primary">View & Apply</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- 🎨 Styles -->
+<style>
+    .hover-shadow {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-radius: 10px;
+    }
+
+        .hover-shadow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    /* 🔙 Back button sa left side */
+    .move-left {
+        left: -100px;
+        top: 10px;
+    }
+
+    .back-btn {
+        transition: all 0.3s ease;
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px rgba(108, 117, 125, 0.6);
+            background-color: #5c636a;
+            color: white;
+        }
+</style>

@@ -1,0 +1,10 @@
+# Visual Studio cache
+.vs/
+
+# Build folders
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.csproj.user
+*.sln.docstates

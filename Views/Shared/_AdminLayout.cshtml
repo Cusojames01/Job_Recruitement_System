@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="d-flex w-100 m-0 p-0" style="height: 100vh;">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white p-3" style="width: 220px; height:100%; position:sticky; top:0;">
+            <h4 class="text-center">Admin</h4>
+            <hr class="bg-white" />
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" asp-controller="Account" asp-action="AdminDashboard">🏠 Dashboard</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" asp-controller="User" asp-action="UserView">👤 Users</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" asp-controller="Recruiter" asp-action="RecruiterView">🏢 Recruiters</a>
+                </li>
+                <li class="nav-item mt-auto">
+                    <a class="nav-link text-white" asp-controller="Account" asp-action="Logout">🚪 Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-fill p-3 bg-light" style="overflow-y:auto; height: 100%;">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

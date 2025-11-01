@@ -1,0 +1,82 @@
+﻿@model Job_Recruitment_System.Models.PostJob
+@{
+    ViewData["Title"] = "Edit Job";
+}
+
+<div class="container mt-4">
+    <h2>Edit Job</h2>
+
+    <form asp-action="EditJobPost" asp-controller="PostJob" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="JobTitle" class="form-label"></label>
+            <input asp-for="JobTitle" class="form-control" />
+            <span asp-validation-for="JobTitle" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="JobDescription" class="form-label"></label>
+            <textarea asp-for="JobDescription" class="form-control"></textarea>
+            <span asp-validation-for="JobDescription" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3">
+            <label class="form-label">JobType</label>
+            <select asp-for="JobType" class="form-select" required>
+                <option value="">-- Select Type --</option>
+                <option>Full-Time</option>
+                <option>Part-Time</option>
+                <option>Remote</option>
+                <option>Contract</option>
+            </select>
+
+        </div>
+
+
+        <div class="mb-3">
+            <label asp-for="SalaryRange" class="form-label"></label>
+            <input asp-for="SalaryRange" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Location" class="form-label"></label>
+            <input asp-for="Location" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">ExperienceLevel</label>
+            <select asp-for="ExperienceLevel" class="form-select" required>
+                <option value="">-- Select Level --</option>
+                <option>Entry-Level</option>
+                <option>Mid-Level</option>
+                <option>Senior-Level</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Qualifications" class="form-label"></label>
+            <textarea asp-for="Qualifications" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Deadline" class="form-label"></label>
+            <input asp-for="Deadline" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-select">
+                <option value="Open" selected>Open</option>
+                <option value="Closed">Closed</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-warning">Save Changes</button>
+        <a asp-action="JobDetails"  asp-controller="PostJob" asp-route-id="@Model.Id" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

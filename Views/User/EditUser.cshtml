@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "EditUser";
+}
+@model Job_Recruitment_System.Models.User
+
+<div class="container mt-5">
+    <div class="card p-4 shadow-lg rounded-4" style="max-width: 500px; margin: auto;">
+        <h3 class="text-center mb-3 text-primary fw-bold">Edit User</h3>
+
+        <!-- Form for editing user -->
+        <form asp-action="EditUser" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label>Full Name</label>
+                <input asp-for="FullName" class="form-control" placeholder="Enter full name" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Sex</label>
+                <select asp-for="Sex" class="form-control" required>
+                    <option value="">--Select Here--</option>
+                    <option value="Male" >Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Email</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Enter email" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" required />
+            </div>
+
+            
+
+            <!-- Save and Cancel buttons -->
+            <div class="d-flex justify-content-between mt-3">
+                <button type="submit" class="btn btn-success w-50 me-2">💾 Save</button>
+                <a asp-action="UserView" class="btn btn-secondary w-50 ms-2">❌ Cancel</a>
+            </div>
+        </form>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success mt-3">@ViewBag.Message</div>
+        }
+    </div>
+</div>

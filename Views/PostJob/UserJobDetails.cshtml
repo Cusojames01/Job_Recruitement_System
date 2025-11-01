@@ -1,0 +1,22 @@
+﻿@model Job_Recruitment_System.Models.PostJob
+
+<div class="card shadow p-4 mt-3">
+    <h2>@Model.JobTitle</h2>
+    <h5 class="text-muted">@Model.CompanyName</h5>
+    <p><strong>Type:</strong> @Model.JobType</p>
+    <p><strong>Location:</strong> @Model.Location</p>
+    <p><strong>Salary:</strong> @Model.SalaryRange</p>
+    <p><strong>Deadline:</strong> @(Model.Deadline?.ToString("yyyy-MM-dd") ?? "N/A")</p>
+    <hr />
+    <p><strong>Job Description:</strong> @Model.JobDescription</p>
+    <p><strong>Qualifications:</strong> @Model.Qualifications</p>
+
+    <form asp-action="Apply" asp-controller="PostJob" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" class="mt-3">
+        <div class="mb-3">
+            <label class="form-label">Upload Resume (PDF)</label>
+            <input type="file" name="resume" class="form-control" accept="application/pdf" required />
+        </div>
+        <button type="submit" class="btn btn-success">Apply Now</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to Jobs</a>
+    </form>
+</div>

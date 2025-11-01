@@ -1,0 +1,43 @@
+﻿@model Job_Recruitment_System.Models.PostJob
+@{
+    ViewData["Title"] = "Job Details";
+}
+
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <!-- Job Header -->
+        <div class="mb-3">
+            <h2 class="fw-bold">@Model.JobTitle</h2>
+            <h5 class="text-muted">@Model.CompanyName</h5>
+            <p class="mb-1"><strong>Type:</strong> @Model.JobType</p>
+            <p class="mb-1"><strong>Salary:</strong> @Model.SalaryRange</p>
+            <p class="mb-1"><strong>Location:</strong> @Model.Location</p>
+        </div>
+
+        <hr />
+
+        <!-- Job Details -->
+        <div>
+            <p><strong>Experience Level:</strong> @Model.ExperienceLevel</p>
+            <p><strong>Job Description:</strong> @Model.JobDescription</p>
+            <p><strong>Qualifications:</strong> @Model.Qualifications</p>
+            <p><strong>Deadline:</strong> @(Model.Deadline.HasValue? Model.Deadline.Value.ToString("yyyy-MM-dd") : "N/A")</p>
+            <p><strong>Status:</strong> @Model.Status</p>
+        </div>
+
+        <!-- Footer Buttons -->
+        <div class="mt-4 d-flex justify-content-between">
+            <div>
+                <a asp-action="JobList" class="btn btn-secondary">← Back to Job List</a>
+            </div>
+            <div>
+                <a asp-action="EditJobPost" asp-controller="PostJob" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edit</a>
+                <form asp-action="Delete" asp-controller="PostJob" asp-route-id="@Model.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this job?');">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="text-muted mt-3"><small>Posted by: @Model.PostedBy on @Model.DatePosted.ToString("yyyy-MM-dd")</small></p>
+    </div>
+</div>
