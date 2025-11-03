@@ -1,0 +1,93 @@
+﻿@model Job_Recruitment_System.Models.JobApplication
+
+@{
+    ViewData["Title"] = "View Job";
+}
+
+<div class="container mt-5 mb-5" style="max-width: 800px;">
+    <!-- 🔙 Back Button -->
+    <div class="mb-3">
+        <a asp-action="MyApplication" asp-controller="PostJob" class="btn btn-secondary">
+            ← Back to My Applications
+        </a>
+    </div>
+
+    <!-- 🔹 Job Card -->
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+        <h3 class="fw-bold text-primary">@Model.PostJob?.JobTitle</h3>
+        <h5 class="text-muted mb-3">@Model.PostJob?.CompanyName</h5>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <p><strong>Type:</strong> @Model.PostJob?.JobType</p>
+                <p><strong>Location:</strong> @Model.PostJob?.Location</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Salary:</strong> @Model.PostJob?.SalaryRange</p>
+                <p><strong>Applied On:</strong> @Model.AppliedDate.ToString("MMMM dd, yyyy")</p>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="mb-3">
+            <h5 class="fw-semibold">Job Description</h5>
+            <p>@Model.PostJob?.JobDescription</p>
+        </div>
+
+        <div class="mb-3">
+            <h5 class="fw-semibold">Qualifications</h5>
+            <p>@Model.PostJob?.Qualifications</p>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between">
+            <!-- 🔹 Resume download -->
+            @if (!string.IsNullOrEmpty(Model.ResumePath))
+            {
+                <a href="@Model.ResumePath" target="_blank" class="btn btn-outline-primary px-4">
+                    <i class="bi bi-file-earmark-pdf"></i> View Resume
+                </a>
+            }
+
+            <!-- ❌ Cancel Button -->
+            <form asp-controller="PostJob" asp-action="CancelApplication" method="post"
+                  onsubmit="return confirm('Are you sure you want to cancel this application?');">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-danger px-4">
+                    <i class="bi bi-x-circle"></i> Cancel Application
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: #fff;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .btn-outline-primary {
+        border: 1.5px solid #0d6efd;
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+    .btn-danger {
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            transform: scale(1.05);
+        }
+</style>

@@ -37,26 +37,40 @@
                             <p class="mb-1"><strong>Type:</strong> @app.PostJob?.JobType</p>
                             <p class="mb-1"><strong>Location:</strong> @app.PostJob?.Location</p>
                             <p class="mb-1"><strong>Applied On:</strong> @app.AppliedDate.ToString("MMMM dd, yyyy")</p>
+
+                            <!-- 🔹 Application Status -->
+                            <p class="mb-1">
+                                <strong>Status:</strong>
+                                @if (string.IsNullOrEmpty(app.Status) || app.Status == "Pending")
+                                {
+                                    <span class="badge bg-secondary">Pending</span>
+                                }
+                                else if (app.Status == "Accepted")
+                                {
+                                    <span class="badge bg-success">Accepted</span>
+                                }
+                                else if (app.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">Rejected</span>
+                                }
+                            </p>
                         </div>
 
-                        <div class="text-center">
-                            @if (!string.IsNullOrEmpty(app.ResumePath))
-                            {
-                                <a href="~/uploads/resumes/@app.ResumePath"
-                                   target="_blank"
-                                   class="btn btn-outline-primary px-3 mb-2">
-                                    <i class="bi bi-file-earmark-pdf"></i> View Resume
-                                </a>
-                            }
-                            else
-                            {
-                                <span class="text-muted d-block mb-2">No Resume</span>
-                            }
-
-                            <a href="@Url.Action("JobDetails", "UserJob", new { id = app.PostJobId })"
-                               class="btn btn-primary px-3">
+                        <div class="text-center d-flex flex-column align-items-center">
+                            <!-- 🔹 View Job -->
+                            <a href="@Url.Action("ViewJob", "PostJob", new { id = app.Id })"
+                               class="btn btn-primary px-3 mb-2 w-100">
                                 <i class="bi bi-info-circle"></i> View Job
                             </a>
+
+                            <!-- ❌ Cancel Application -->
+                            <form asp-controller="PostJob" asp-action="CancelApplication"
+                                  method="post" onsubmit="return confirm('Are you sure you want to cancel this application?');">
+                                <input type="hidden" name="id" value="@app.Id" />
+                                <button type="submit" class="btn btn-danger px-3 w-100">
+                                    <i class="bi bi-x-circle"></i> Cancel Application
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

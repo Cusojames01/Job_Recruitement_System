@@ -1,5 +1,16 @@
-﻿@{
+﻿@using Job_Recruitment_System.Models
+@inject JobDBContext dbContext
+@{
     ViewData["Title"] = "RecruiterDashBoard";
+    var recruiterId = Context.Session.GetInt32("RecruiterId");
+    var jobs = new List<PostJob>();
+
+    if (recruiterId != null)
+    {
+        jobs = dbContext.JobPosts
+                        .Where(j => j.RecruiterId == recruiterId)
+                        .ToList();
+    }
 }
 
 <div class="container mt-5">
@@ -11,11 +22,11 @@
     </div>
 
     <div class="row">
-        <!-- Post Job -->
+        <!-- Post Job Card -->
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-0 h-100 text-center">
                 <div class="card-body">
-                    <i class="bi bi-person-lines-fill text-success" style="font-size: 2rem;"></i>
+                    <i class="bi bi-person-lines-fill text-success" style="font-size: 2rem"></i>
                     <h5 class="mt-3">Post a Job</h5>
                     <p class="text-muted small">Create a new job opening for applicants.</p>
                     <a href="@Url.Action("PostJob", "PostJob")" class="btn btn-outline-success btn-sm">Post Job</a>
@@ -23,23 +34,28 @@
             </div>
         </div>
 
-        <!-- View Applicants -->
+        <!-- View Applicants Card -->
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-0 h-100 text-center">
                 <div class="card-body">
                     <i class="bi bi-people-fill text-primary" style="font-size: 2rem;"></i>
                     <h5 class="mt-3">View Applicants</h5>
                     <p class="text-muted small">Check all applicants who applied to your job posts.</p>
-                    <a href="@Url.Action("ViewApplicants", "Recruiter")" class="btn btn-outline-primary btn-sm">View Applicants</a>
+
+                    <!-- Redirect to ViewApplicant page -->
+                    <a href="@Url.Action("ViewApplicant", "PostJob")" class="btn btn-primary">
+                        View Applicants
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- View Job Posts -->
+  
+        <!-- View Job Posts Card -->
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-0 h-100 text-center">
                 <div class="card-body">
-                    <i class="bi bi-briefcase-fill text-info" style="font-size: 2rem;"></i>
+                    <i class="bi bi-briefcase-fill text-info" style="font-size: 2rem"></i>
                     <h5 class="mt-3">View Job Posts</h5>
                     <p class="text-muted small">See all your active and past job postings.</p>
                     <a href="@Url.Action("JobList", "PostJob")" class="btn btn-outline-info btn-sm">View Posts</a>
@@ -47,13 +63,13 @@
             </div>
         </div>
 
-        <!-- Edit Profile -->
+        <!-- Profile Card -->
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-0 h-100 text-center">
                 <div class="card-body">
-                    <i class="bi bi-pencil-square text-warning" style="font-size: 2rem;"></i>
+                    <i class="bi bi-pencil-square text-warning" style="font-size: 2rem"></i>
                     <h5 class="mt-3">Profile</h5>
-                    <p class="text-muted small">View an Update  your company information and contact details.</p>
+                    <p class="text-muted small">View and update your company information and contact details.</p>
                     <a href="@Url.Action("RecruiterProfile", "Recruiter")" class="btn btn-outline-warning btn-sm">View Profile</a>
                 </div>
             </div>
