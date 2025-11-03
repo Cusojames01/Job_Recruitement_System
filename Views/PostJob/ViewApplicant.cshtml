@@ -1,0 +1,115 @@
+﻿@model Tuple<IEnumerable<Job_Recruitment_System.Models.PostJob>, IEnumerable<Job_Recruitment_System.Models.JobApplication>>
+@{
+    ViewData["Title"] = "ViewApplicant";
+    var jobs = Model.Item1;
+    var applicants = Model.Item2;
+}
+
+
+<div class="container mt-5 mb-5">
+    <h2 class="text-center text-success fw-bold mb-4">Your Job Posts</h2>
+    <div class="mb-4">
+        <a href="@Url.Action("RecruiterDashBoard", "Recruiter")" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> ← Back to Dashboard
+        </a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Date Posted</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in jobs)
+            {
+                <tr>
+                    <td>@job.JobTitle</td>
+                    <td>@job.DatePosted.ToString("MMMM dd, yyyy")</td>
+                    <td>@job.Status</td>
+                    <td>
+                        <a href="@Url.Action("ViewApplicant", "PostJob", new { jobId = job.Id })" class="btn btn-primary btn-sm">
+                            View Applicants
+                        </a>
+                        <a href="@Url.Action("EditJobPost", "PostJob", new { id = job.Id })" class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (applicants != null && applicants.Any())
+    {
+        <h2 class="text-center text-primary fw-bold mt-5 mb-4">
+            <i class="bi bi-people-fill"></i> Applicants for @ViewBag.JobTitle
+        </h2>
+
+        <table class="table table-bordered table-hover align-middle shadow-sm">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var app in applicants)
+                {
+                    <tr>
+                        <td>@app.User?.FullName</td>
+                        <td>@app.User?.Email</td>
+                        <td>@app.User?.Contact</td>
+                        <td>@app.AppliedDate.ToString("MMMM dd, yyyy")</td>
+                        <td>
+                            @if (string.IsNullOrEmpty(app.Status))
+                            {
+                                <span class="badge bg-secondary">Pending</span>
+                            }
+                            else if (app.Status == "Accepted")
+                            {
+                                <span class="badge bg-success">Accepted</span>
+                            }
+                            else if (app.Status == "Rejected")
+                            {
+                                <span class="badge bg-danger">Rejected</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <a href="@app.ResumePath" target="_blank" class="btn btn-sm btn-outline-primary mb-1">
+                                <i class="bi bi-file-earmark-pdf"></i> View PDF
+                            </a>
+                            <a href="@app.ResumePath" download class="btn btn-sm btn-outline-secondary mb-1">
+                                <i class="bi bi-download"></i> Download
+                            </a>
+
+                            <form asp-action="AcceptApplication" asp-controller="PostJob" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@app.Id" />
+                                <button type="submit" class="btn btn-sm btn-success mb-1">Accept</button>
+                            </form>
+
+                            <form asp-action="RejectApplication" asp-controller="PostJob" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@app.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger mb-1">
+                                    <i class="bi bi-x-circle"></i> Reject
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (ViewBag.JobTitle != null)
+    {
+        <div class="alert alert-info text-center shadow-sm mt-3">
+            No applicants yet for @ViewBag.JobTitle.
+        </div>
+    }
+</div>
