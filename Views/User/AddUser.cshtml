@@ -6,17 +6,18 @@
     <div class="card p-4 shadow-lg rounded-4" style="max-width: 500px; margin: auto;">
         <h3 class="text-center mb-3 text-primary fw-bold">Applicant Registration</h3>
 
-        <form asp-action="AddUser" method="post">
+        <form asp-action="AddUser" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label>Full Name</label>
                 <input asp-for="FullName" class="form-control" placeholder="Enter your full name" required />
             </div>
+
             <div class="mb-3">
                 <label>Sex</label>
                 <select asp-for="Sex" class="form-control" required>
                     <option value="">--Select Here--</option>
                     <option value="male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="female">Female</option>
                 </select>
             </div>
 
@@ -35,8 +36,14 @@
                 <input asp-for="Contact" class="form-control" placeholder="Enter contact number" required />
             </div>
 
+            <div class="mb-3">
+                <label>Profile Image</label>
+                <input type="file" name="ProfileImage" class="form-control" />
+            </div>
+
             <button type="submit" class="btn btn-primary w-100 mt-2">Register</button>
         </form>
+
 
         @if (ViewBag.Message != null)
         {

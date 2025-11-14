@@ -77,7 +77,6 @@ namespace Job_Recruitment_System.Controllers
             }
             return View(user);
         }
-
         [HttpPost]
         public async Task<IActionResult> AddUser(User user, IFormFile ProfileImage)
         {
@@ -100,6 +99,7 @@ namespace Job_Recruitment_System.Controllers
                 await _db.SaveChangesAsync();
                 return RedirectToAction("UserView");
             }
+
             return View(user);
         }
 
